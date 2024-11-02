@@ -1,4 +1,4 @@
-name: flake8 Lint
+name: Lint and run tests
 
 on: [push, pull_request]
 
