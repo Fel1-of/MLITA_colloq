@@ -1,6 +1,8 @@
 from app.terms.variable import Var
 from .term import Term
 from .operator import Operator
+from .unary_operator import UnaryOperator
+from app.utils import is_var_or_unary_operator
 
 
 class BinaryOperator(Operator):
@@ -10,9 +12,17 @@ class BinaryOperator(Operator):
         super().__init__(arg1, arg2)
 
     def __str__(self):
-        l = str(self.arg1) if isinstance(self.arg1, Var) else f'({self.arg1})'
-        r = str(self.arg2) if isinstance(self.arg2, Var) else f'({self.arg2})'
-        return f'{l} {self._symbol} {r}'
+        if is_var_or_unary_operator(self.arg1):
+            left = str(self.arg1)
+        else:
+            left = f'({self.arg1})'
+            
+        if is_var_or_unary_operator(self.arg2):
+            right = str(self.arg2)
+        else:
+            right = f'({self.arg2})'
+            
+        return f'{left} {self._symbol} {right}'
 
     @property
     def arg1(self) -> Term:

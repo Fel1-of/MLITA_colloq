@@ -1,10 +1,11 @@
+from app.utils import is_var_or_unary_operator
 from .abstract.unary_operator import UnaryOperator
 from .variable import Var
 
 
 class Not(UnaryOperator):
     def __str__(self) -> str:
-        if isinstance(self.arg, Var):
+        if is_var_or_unary_operator(self.arg):
             return f'!{self.arg}'
         return f'!({self.arg})'
 
