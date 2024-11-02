@@ -5,19 +5,19 @@ from app.utils import is_var_or_unary_operator
 
 
 class And(BinaryOperator):
-    _symbol = "*"
+    _symbol = '*'
 
     def humanize(self) -> str:
         if is_var_or_unary_operator(self.arg1):
             left = str(self.arg1.humanize())
         else:
-            left = f"({self.arg1.humanize()})"
+            left = f'({self.arg1.humanize()})'
 
         if is_var_or_unary_operator(self.arg2):
             right = str(self.arg2.humanize())
         else:
-            right = f"({self.arg2.humanize()})"
-        return f"{left} и {right}"
+            right = f'({self.arg2.humanize()})'
+        return f'{left} и {right}'
 
     def to_implication_view(self):
         return Not(
