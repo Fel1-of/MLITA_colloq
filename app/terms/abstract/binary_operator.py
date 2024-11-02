@@ -1,7 +1,5 @@
-from app.terms.variable import Var
 from .term import Term
 from .operator import Operator
-from .unary_operator import UnaryOperator
 from app.utils import is_var_or_unary_operator
 
 
@@ -16,12 +14,12 @@ class BinaryOperator(Operator):
             left = str(self.arg1)
         else:
             left = f'({self.arg1})'
-            
+
         if is_var_or_unary_operator(self.arg2):
             right = str(self.arg2)
         else:
             right = f'({self.arg2})'
-            
+
         return f'{left} {self._symbol} {right}'
 
     @property
