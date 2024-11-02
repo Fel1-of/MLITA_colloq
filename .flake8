@@ -1,0 +1,2 @@
+[flake8]
+exclude = .venv,.git,.tox,dist,doc,*lib/python*,*egg,build
