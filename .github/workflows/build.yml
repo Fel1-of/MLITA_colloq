@@ -3,7 +3,7 @@ name: flake8 Lint
 on: [push, pull_request]
 
 jobs:
-  flake8-lint:
+  build:
     runs-on: ubuntu-latest
     name: Lint
     steps:
@@ -15,3 +15,9 @@ jobs:
           python-version: "3.11"
       - name: Lint with flake8
         uses: py-actions/flake8@v2
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Run tests
+        run: python -m pytest
