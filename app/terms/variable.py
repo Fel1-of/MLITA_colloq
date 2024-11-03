@@ -3,7 +3,7 @@ from copy import copy
 
 
 class Var(Term):
-    '''Boolean variable class'''
+    """Boolean variable class"""
 
     def __init__(self, char: str):
         self.name = char

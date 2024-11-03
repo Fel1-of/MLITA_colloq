@@ -5,11 +5,11 @@ from copy import deepcopy
 
 class TermList(UserList[Term]):
     def humanize(self) -> list[str]:
-        '''String in russian language'''
+        """String in russian language"""
         return [term.humanize() for term in self.data]
 
     def to_implication_view(self) -> 'TermList':
-        '''Equivalent term using only implication and negation'''
+        """Equivalent term using only implication and negation"""
         return TermList(term.to_implication_view() for term in self.data)
 
     def substitute(self, **kwargs: dict[str, 'Term']) -> 'TermList':
@@ -17,7 +17,7 @@ class TermList(UserList[Term]):
 
 
 class Operator(Term):
-    '''Boolean function abstract class'''
+    """Boolean function abstract class"""
 
     _args: TermList
 
