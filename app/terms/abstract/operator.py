@@ -29,7 +29,9 @@ class Operator(Term):
             self._args.append(arg)
 
     def __copy__(self):
-        return self.__class__(*self._args)
+        raise NotImplementedError(
+            'Operator is not copyable. Use deepcopy instead'
+        )
 
     def __deepcopy__(self, memo) -> 'Term':
         return self.__class__(*deepcopy(self._args))
