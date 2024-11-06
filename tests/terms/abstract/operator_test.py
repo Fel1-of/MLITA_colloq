@@ -18,7 +18,6 @@ def test_copy_is_not_implemented_not(x):
         copy(Not(x))
 
 
-@pytest.mark.skip(reason='Equal is not implemented')
 def test_copy_is_not_implemented_equal(x):
     with pytest.raises(NotImplementedError):
         copy(Equal(x, x))
@@ -29,7 +28,6 @@ def test_copy_is_not_implemented_arrow(x):
         copy(Arrow(x, x))
 
 
-@pytest.mark.skip(reason='Xor is not implemented')
 def test_copy_is_not_implemented_xor(x):
     with pytest.raises(NotImplementedError):
         copy(Xor(x, x))
