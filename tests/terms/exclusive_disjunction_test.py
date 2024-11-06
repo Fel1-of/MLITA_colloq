@@ -14,13 +14,13 @@ def test_humanize():
 
 
 def test_complex_humanize():
-    ar = Xor(Xor(Var('A'), Var('B')), Xor(Var('C'), Var('D')))
-    assert ar.humanize() == 'либо (либо A, либо B), либо (либо C, либо D)'
+    x = Xor(Xor(Var('A'), Var('B')), Xor(Var('C'), Var('D')))
+    assert x.humanize() == 'либо (либо A, либо B), либо (либо C, либо D)'
 
 
 def test_not_humanize():
-    ar = Xor(Not(Var('A')), Var('B'))
-    assert ar.humanize() == 'либо не A, либо B'
+    x = Xor(Not(Var('A')), Var('B'))
+    assert x.humanize() == 'либо не A, либо B'
 
 
 def test_to_implication_view():

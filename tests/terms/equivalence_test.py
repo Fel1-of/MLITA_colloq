@@ -14,15 +14,15 @@ def test_humanize():
 
 
 def test_complex_humanize():
-    ar = Equal(Equal(Var('A'), Var('B')), Equal(Var('C'), Var('D')))
+    eq = Equal(Equal(Var('A'), Var('B')), Equal(Var('C'), Var('D')))
     assert (
-        ar.humanize() == '(A эквивалентно B) эквивалентно (C эквивалентно D)'
+        eq.humanize() == '(A эквивалентно B) эквивалентно (C эквивалентно D)'
     )
 
 
 def test_not_humanize():
-    ar = Equal(Not(Var('A')), Var('B'))
-    assert ar.humanize() == 'не A эквивалентно B'
+    eq = Equal(Not(Var('A')), Var('B'))
+    assert eq.humanize() == 'не A эквивалентно B'
 
 
 def test_to_implication_view():
