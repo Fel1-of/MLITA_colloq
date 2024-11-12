@@ -1,12 +1,17 @@
 from .abstract.term import Term
-from copy import copy
+from copy import copy, deepcopy
 
 
 class Var(Term):
     """Boolean variable class"""
 
     def __init__(self, char: str):
-        self.name = char
+        self._name = char
+
+    @property
+    def name(self) -> str:
+        """Имя переменной доступно только для чтения."""
+        return self._name
 
     def __copy__(self) -> 'Var':
         return self.__class__(self.name)
@@ -21,7 +26,17 @@ class Var(Term):
         return str(self)
 
     def substitute(self, **kwargs: dict[str, Term]) -> Term:
-        return kwargs.get(self.name, self.copy())
+        return deepcopy(kwargs.get(self.name, self))
 
     def to_implication_view(self):
         return copy(self)
+
+    def __eq__(self, other: object) -> bool:
+        """Сравнение объектов класса Var."""
+        if not isinstance(other, Var):
+            return NotImplemented
+        return self.name == other.name
+
+    def __hash__(self) -> int:
+        """Хэширование на основе имени переменной."""
+        return hash(self.name)
