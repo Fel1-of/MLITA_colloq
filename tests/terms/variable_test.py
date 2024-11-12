@@ -1,4 +1,4 @@
-from app.terms import Var, Arrow
+from app.terms import Var
 import pytest
 from copy import copy, deepcopy
 
