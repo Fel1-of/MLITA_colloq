@@ -11,4 +11,3 @@ if __name__ == '__main__':
     print(ar)
     print(ar.humanize())
     print(ar.to_implication_view().to_implication_view())
-    print("Мама-ама криминал!")
