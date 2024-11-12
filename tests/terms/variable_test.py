@@ -1,0 +1,85 @@
+from app.terms import Var
+import pytest
+
+
+def test_initialization():
+    """Тест корректной инициализации объекта."""
+    v = Var("A")
+    assert v.name == "A"
+
+
+def test_immutability():
+    """Тест неизменяемости атрибута name."""
+    v = Var("A")
+    with pytest.raises(AttributeError):
+        v.name = "B"  # Попытка изменить name должна вызвать ошибку
+
+
+def test_equality():
+    """Тест сравнения объектов."""
+    v1 = Var("A")
+    v2 = Var("A")
+    v3 = Var("B")
+    assert v1 == v2
+    assert v1 != v3
+
+
+def test_hash():
+    """Тест хэширования объектов."""
+    v1 = Var("A")
+    v2 = Var("A")
+    v3 = Var("B")
+    assert hash(v1) == hash(v2)
+    assert hash(v1) != hash(v3)
+
+
+def test_dict_usage():
+    """Тест использования Var в качестве ключа словаря."""
+    v1 = Var("A")
+    v2 = Var("B")
+    v3 = Var("A")
+
+    d = {v1: "Value A", v2: "Value B"}
+    assert d[v3] == "Value A"
+    assert d[v2] == "Value B"
+
+
+def test_copy():
+    """Тест поверхностного и глубокого копирования."""
+    v = Var("A")
+    v_copy = v.__copy__()
+    v_deepcopy = v.__deepcopy__({})
+    assert v == v_copy
+    assert v == v_deepcopy
+    assert v is not v_copy
+    assert v is not v_deepcopy
+
+
+def test_str():
+    """Тест строкового представления."""
+    v = Var("A")
+    assert str(v) == "A"
+
+
+def test_humanize():
+    """Тест метода humanize."""
+    v = Var("A")
+    assert v.humanize() == "A"
+
+
+def test_substitute():
+    """Тест метода substitute."""
+    v = Var("A")
+    substitution = v.substitute(A=Var("B"), C=Var("D"))
+    assert substitution == Var("B")
+
+    no_substitution = v.substitute(C=Var("D"))
+    assert no_substitution == v
+
+
+def test_to_implication_view():
+    """Тест метода to_implication_view."""
+    v = Var("A")
+    implication_view = v.to_implication_view()
+    assert implication_view == v
+    assert implication_view is not v
