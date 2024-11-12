@@ -1,3 +1,4 @@
 [flake8]
 exclude = .venv,.git,.tox,dist,doc,*lib/python*,*egg,build
 max-line-length = 93
+require-plugins = flake8-quotes
