@@ -33,8 +33,8 @@ class Term(ABC):
         pass
 
     @abstractmethod
-    def unification(self) -> 'Term':
-        """Unification of Term for hash and equal (rename Vars)"""
+    def unify(self) -> 'Term':
+        """unify of Term for hash and equal (rename Vars)"""
         pass
 
     @abstractmethod

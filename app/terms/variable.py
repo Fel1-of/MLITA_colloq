@@ -44,6 +44,6 @@ class Var(Term):
     def vars(self) -> OrderedSet[str]:
         return OrderedSet(self.name)
 
-    def unification(self):
+    def unify(self):
         # AGAIN, SORRY. JUST SORRY.
         return self.__class__(ascii_uppercase[0])

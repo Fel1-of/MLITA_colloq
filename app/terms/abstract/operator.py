@@ -19,10 +19,10 @@ class TermList(UserList[Term]):
         return TermList(term.substitute(**kwargs) for term in self.data)
 
     def vars(self) -> OrderedSet[str]:
-        sum_of_ordered_sets = OrderedSet()
+        union_of_ordered_sets = OrderedSet()
         for term in self.data:
-            sum_of_ordered_sets.update(term.vars())
-        return sum_of_ordered_sets
+            union_of_ordered_sets.update(term.vars())
+        return union_of_ordered_sets
 
 
 class Operator(Term):
@@ -51,7 +51,7 @@ class Operator(Term):
     def vars(self) -> OrderedSet[str]:
         return self._args.vars()
 
-    def unification(self) -> Term:
+    def unify(self) -> Term:
         vars: OrderedSet[str] = self.vars()
         # I AM VERY SORRY FOR THIS CODE. PLEASE DONT KILL ME
         # I REALLY DONT WANT TO WRITE THIS PART THAT WAY
