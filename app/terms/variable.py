@@ -1,5 +1,8 @@
 from .abstract.term import Term
 from copy import copy, deepcopy
+from ordered_set import OrderedSet
+from string import ascii_uppercase
+from typing import Optional
 
 
 class Var(Term):
@@ -22,15 +25,6 @@ class Var(Term):
     def __str__(self):
         return self.name
 
-    def humanize(self):
-        return str(self)
-
-    def substitute(self, **kwargs: dict[str, Term]) -> Term:
-        return deepcopy(kwargs.get(self.name, self))
-
-    def to_implication_view(self):
-        return copy(self)
-
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, Var):
             return NotImplemented
@@ -38,3 +32,24 @@ class Var(Term):
 
     def __hash__(self) -> int:
         return hash(self.name)
+
+    def humanize(self):
+        return str(self)
+
+    def substitute(self, **kwargs: dict[str, Term]) -> Term:
+        return deepcopy(kwargs.get(self.name, self))
+
+    def get_substitution_map(self, other: 'Term') -> Optional[dict[str, 'Term']]:
+        if isinstance(other, Var) and other.name:
+            return {}
+        return {self.name: other}
+
+    def to_implication_view(self):
+        return copy(self)
+
+    def vars(self) -> OrderedSet[str]:
+        return OrderedSet(self.name)
+
+    def unify(self):
+        # AGAIN, SORRY. JUST SORRY.
+        return self.__class__(ascii_uppercase[0])

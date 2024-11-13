@@ -1,4 +1,6 @@
 from abc import ABC, abstractmethod
+from typing import Optional
+from ordered_set import OrderedSet
 
 
 class Term(ABC):
@@ -28,5 +30,23 @@ class Term(ABC):
 
     @abstractmethod
     def substitute(self, **kwargs: dict[str, 'Term']) -> 'Term':
-        """Substitute an Term instead of a Literal"""
+        """Substitute an Term instead of a Var"""
+        pass
+
+    @abstractmethod
+    def get_substitution_map(self, other: 'Term') -> Optional[dict[str, 'Term']]:
+        """
+        Returns substitution map, that convert self to other.
+        None if it is impossible
+        """
+        pass
+
+    @abstractmethod
+    def unify(self) -> 'Term':
+        """Unify of Term for hash and equal (rename Vars)"""
+        pass
+
+    @abstractmethod
+    def vars(self) -> OrderedSet[str]:
+        """Returns names of used Vars in Term"""
         pass
