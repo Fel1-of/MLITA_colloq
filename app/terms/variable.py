@@ -1,5 +1,7 @@
 from .abstract.term import Term
 from copy import copy, deepcopy
+from ordered_set import OrderedSet
+from string import ascii_uppercase
 
 
 class Var(Term):
@@ -22,6 +24,14 @@ class Var(Term):
     def __str__(self):
         return self.name
 
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, Var):
+            return NotImplemented
+        return self.name == other.name
+
+    def __hash__(self) -> int:
+        return hash(self.name)
+
     def humanize(self):
         return str(self)
 
@@ -31,10 +41,9 @@ class Var(Term):
     def to_implication_view(self):
         return copy(self)
 
-    def __eq__(self, other: object) -> bool:
-        if not isinstance(other, Var):
-            return NotImplemented
-        return self.name == other.name
+    def vars(self) -> OrderedSet[str]:
+        return OrderedSet(self.name)
 
-    def __hash__(self) -> int:
-        return hash(self.name)
+    def unification(self):
+        # AGAIN, SORRY. JUST SORRY.
+        return self.__class__(ascii_uppercase[0])
