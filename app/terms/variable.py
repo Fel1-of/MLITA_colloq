@@ -2,6 +2,7 @@ from .abstract.term import Term
 from copy import copy, deepcopy
 from ordered_set import OrderedSet
 from string import ascii_uppercase
+from typing import Optional
 
 
 class Var(Term):
@@ -37,6 +38,11 @@ class Var(Term):
 
     def substitute(self, **kwargs: dict[str, Term]) -> Term:
         return deepcopy(kwargs.get(self.name, self))
+
+    def get_substitution_map(self, other: 'Term') -> Optional[dict[str, 'Term']]:
+        if isinstance(other, Var) and other.name:
+            return {}
+        return {self.name: other}
 
     def to_implication_view(self):
         return copy(self)
