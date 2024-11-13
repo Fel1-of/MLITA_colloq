@@ -1,6 +1,9 @@
-from .term import Term
 from collections import UserList
 from copy import deepcopy
+from ordered_set import OrderedSet
+from string import ascii_uppercase
+from .term import Term
+from app.terms.variable import Var
 
 
 class TermList(UserList[Term]):
@@ -14,6 +17,12 @@ class TermList(UserList[Term]):
 
     def substitute(self, **kwargs: dict[str, 'Term']) -> 'TermList':
         return TermList(term.substitute(**kwargs) for term in self.data)
+
+    def vars(self) -> OrderedSet[str]:
+        union_of_ordered_sets = OrderedSet()
+        for term in self.data:
+            union_of_ordered_sets.update(term.vars())
+        return union_of_ordered_sets
 
 
 class Operator(Term):
@@ -33,8 +42,20 @@ class Operator(Term):
             'Operator is not copyable. Use deepcopy instead'
         )
 
-    def __deepcopy__(self, memo) -> 'Term':
+    def __deepcopy__(self, memo) -> Term:
         return self.__class__(*deepcopy(self._args))
 
     def substitute(self, **kwargs: dict[str, 'Term']) -> Term:
         return self.__class__(*self._args.substitute(**kwargs))
+
+    def vars(self) -> OrderedSet[str]:
+        return self._args.vars()
+
+    def unify(self) -> Term:
+        vars: OrderedSet[str] = self.vars()
+        # I AM VERY SORRY FOR THIS CODE. PLEASE DONT KILL ME
+        # I REALLY DONT WANT TO WRITE THIS PART THAT WAY
+        # IT IS SO BAD
+        min_len = min(len(vars), len(ascii_uppercase))
+        substitute_dict = dict(zip(vars[:min_len], map(Var, ascii_uppercase[:min_len])))
+        return self.substitute(**substitute_dict)
