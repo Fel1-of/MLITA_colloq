@@ -10,7 +10,7 @@ class Var(Term):
 
     @property
     def name(self) -> str:
-        """The variable name is read-only."""
+        """Get name of the Var. The name is read-only."""
         return self._name
 
     def __copy__(self) -> 'Var':
@@ -32,11 +32,9 @@ class Var(Term):
         return copy(self)
 
     def __eq__(self, other: object) -> bool:
-        """Compare the variable with another object for equality."""
         if not isinstance(other, Var):
             return NotImplemented
         return self.name == other.name
 
     def __hash__(self) -> int:
-        """Compute the hash value of the Var."""
         return hash(self.name)
