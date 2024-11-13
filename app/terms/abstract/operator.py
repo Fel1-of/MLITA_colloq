@@ -53,11 +53,7 @@ class Operator(Term):
         return self.__class__(*self._args.substitute(**kwargs))
 
     def get_substitution_map(self, other: 'Term') -> Optional[dict[str, 'Term']]:
-        if not isinstance(other, Operator):
-            return None
         if type(self) is not type(other):
-            return None
-        if len(self._args) != len(other._args):
             return None
 
         new_substitution_map: dict[str, 'Term'] = {}

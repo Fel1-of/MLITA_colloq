@@ -45,3 +45,10 @@ def test_get_sub_map_term_to_itself():
     Z = Var('Z')
     term1 = Arrow(Arrow(And(X, Y), Not(Z)), And(X, Y))
     assert term1.substitute(term1) == {}
+
+
+def test_get_sub_map_term_to_var():
+    X = Var('X')
+    Y = Var('Y')
+    term1 = Arrow(X, Y)
+    assert term1.get_substitution_map(X) is None
