@@ -4,20 +4,17 @@ from copy import copy, deepcopy
 
 
 def test_initialization():
-    """Тест корректной инициализации объекта."""
     v = Var('A')
     assert v.name == 'A'
 
 
 def test_immutability():
-    """Тест неизменяемости атрибута name."""
     v = Var('A')
     with pytest.raises(AttributeError):
-        v.name = 'B'  # Попытка изменить name должна вызвать ошибку
+        v.name = 'B'
 
 
 def test_equality():
-    """Тест сравнения объектов."""
     v1 = Var('A')
     v2 = Var('A')
     v3 = Var('B')
@@ -27,7 +24,6 @@ def test_equality():
 
 
 def test_hash():
-    """Тест хэширования объектов."""
     v1 = Var('A')
     v2 = Var('A')
     v3 = Var('B')
@@ -36,7 +32,6 @@ def test_hash():
 
 
 def test_dict_usage():
-    """Тест использования Var в качестве ключа словаря."""
     v1 = Var('A')
     v2 = Var('B')
     v3 = Var('A')
@@ -47,7 +42,6 @@ def test_dict_usage():
 
 
 def test_copy():
-    """Тест поверхностного и глубокого копирования."""
     v = Var('A')
     v_copy = copy(v)
     v_deepcopy = deepcopy(v)
@@ -58,19 +52,16 @@ def test_copy():
 
 
 def test_str():
-    """Тест строкового представления."""
     v = Var('A')
     assert str(v) == 'A'
 
 
 def test_humanize():
-    """Тест метода humanize."""
     v = Var('A')
     assert v.humanize() == 'A'
 
 
 def test_substitute():
-    """Тест метода substitute."""
     v = Var('A')
     substitution = v.substitute(A=Var('B'), C=Var('D'))
     assert substitution == Var('B')
@@ -80,7 +71,6 @@ def test_substitute():
 
 
 def test_to_implication_view():
-    """Тест метода to_implication_view."""
     v = Var('A')
     implication_view = v.to_implication_view()
     assert implication_view == v
