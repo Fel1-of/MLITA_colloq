@@ -45,6 +45,9 @@ class Operator(Term):
     def __deepcopy__(self, memo) -> Term:
         return self.__class__(*deepcopy(self._args))
 
+    def __eq__(self, other) -> bool:
+        return str(self.unify()) == str(other.unify())
+
     def substitute(self, **kwargs: dict[str, 'Term']) -> Term:
         return self.__class__(*self._args.substitute(**kwargs))
 
