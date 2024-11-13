@@ -33,6 +33,29 @@ def test_copy_is_not_implemented_xor(x):
         copy(Xor(x, x))
 
 
+def test_equal_with_equal_vars():
+    v1 = Var('A')
+    v2 = Var('B')
+    assert Arrow(v1, v1) == Arrow(v1, v1)
+    assert Arrow(v1, v1) != Arrow(v1, v2)
+
+
+def test_equal_with_different_operators():
+    v1 = Var('A')
+    v2 = Var('B')
+    assert Arrow(v1, v2) != Equal(v1, v2)
+    assert Arrow(v1, v1) != Or(v1, v1)
+
+
+def test_equal_with_equal_operators():
+    v1 = Var('A')
+    v2 = Var('B')
+    v3 = Var('C')
+    assert Arrow(v1, v2) == Arrow(v2, v3)
+    assert Or(v1, v2) == Or(v1, v2)
+    assert And(v1, v1) == And(v1, v1)
+
+
 @pytest.fixture
 def x():
     return Var('x')
