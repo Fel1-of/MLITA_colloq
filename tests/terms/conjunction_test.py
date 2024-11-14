@@ -13,6 +13,10 @@ def test_complex_str():
     assert str(And(And(Var('A'), Var('B')), Var('C'))) == '(A * B) * C'
 
 
+def test_repr():
+    assert repr(And(Var('A'), Var('B'))) == "And(Var('A'), Var('B'))"
+
+
 def test_humanize():
     assert And(Var('A'), Var('B')).humanize() == 'A и B'
 

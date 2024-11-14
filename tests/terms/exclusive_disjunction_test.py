@@ -9,6 +9,10 @@ def test_str_with_not():
     assert str(Xor(Var('A'), Not(Var('B')))) == 'A + !B'
 
 
+def test_repr():
+    assert repr(Xor(Var('A'), Var('B'))) == "Xor(Var('A'), Var('B'))"
+
+
 def test_humanize():
     assert Xor(Var('A'), Var('B')).humanize() == 'либо A, либо B'
 

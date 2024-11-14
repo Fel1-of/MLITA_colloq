@@ -13,6 +13,18 @@ def test_complex_str():
     assert str(Not(Or(Var('A'), Var('B')))) == '!(A | B)'
 
 
+def test_repr():
+    assert repr(Not(Var('A'))) == "Not(Var('A'))"
+
+
+def test_repr_double():
+    assert repr(Not(Not(Var('A')))) == "Not(Not(Var('A')))"
+
+
+def test_repr_complex():
+    assert repr(Not(Or(Var('A'), Var('B')))) == "Not(Or(Var('A'), Var('B')))"
+
+
 def test_humanize():
     assert Not(Var('A')).humanize() == 'не A'
 

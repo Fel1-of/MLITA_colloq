@@ -39,15 +39,16 @@ class Operator(Term):
             self._args.append(arg)
 
     def __copy__(self):
-        raise NotImplementedError(
-            'Operator is not copyable. Use deepcopy instead'
-        )
+        raise NotImplementedError('Operator is not copyable. Use deepcopy instead')
 
     def __deepcopy__(self, memo) -> Term:
         return self.__class__(*deepcopy(self._args))
 
     def __eq__(self, other) -> bool:
         return str(self.unify()) == str(other.unify())
+
+    def __repr__(self) -> str:
+        return f'{self.__class__.__name__}({", ".join(map(repr, self._args))})'
 
     def substitute(self, **kwargs: dict[str, 'Term']) -> Term:
         return self.__class__(*self._args.substitute(**kwargs))
