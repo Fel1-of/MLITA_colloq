@@ -58,21 +58,27 @@ class Operator(Term):
             return None
 
         new_substitution_map: dict[str, 'Term'] = {}
+
         for term1, term2 in zip(self._args, other._args):
             if isinstance(term1, Var):
                 if isinstance(term2, Var) and term1 == term2:
                     continue
                 new_substitution_map[term1.name] = term2
                 continue
+
             if type(term1) is type(term2):
                 local_substitute_map = term1.get_substitution_map(term2)
+
                 if local_substitute_map is None:
                     return None
+
                 new_substitution_map.update(local_substitute_map)
                 continue
             return None
-        term1_substituted = term1.substitute(**new_substitution_map)
-        if str(term1_substituted) != str(term2):
+
+        substituted = self.substitute(**new_substitution_map)
+
+        if str(substituted) != str(other):
             return None
         return new_substitution_map
 
