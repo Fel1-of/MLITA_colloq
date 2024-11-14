@@ -2,7 +2,7 @@ from collections import UserList
 from copy import deepcopy
 from ordered_set import OrderedSet
 from string import ascii_uppercase
-from typing import Optional
+from typing import Optional, Sequence
 from .term import Term
 from app.terms.variable import Var
 
@@ -78,11 +78,11 @@ class Operator(Term):
     def vars(self) -> OrderedSet[str]:
         return self._args.vars()
 
-    def unify(self) -> Term:
+    def unify(self, alphabet: Sequence[str] = ascii_uppercase) -> Term:
         vars: OrderedSet[str] = self.vars()
         # I AM VERY SORRY FOR THIS CODE. PLEASE DONT KILL ME
         # I REALLY DONT WANT TO WRITE THIS PART THAT WAY
         # IT IS SO BAD
-        min_len = min(len(vars), len(ascii_uppercase))
-        substitute_dict = dict(zip(vars[:min_len], map(Var, ascii_uppercase[:min_len])))
+        min_len = min(len(vars), len(alphabet))
+        substitute_dict = dict(zip(vars[:min_len], map(Var, alphabet[:min_len])))
         return self.substitute(**substitute_dict)

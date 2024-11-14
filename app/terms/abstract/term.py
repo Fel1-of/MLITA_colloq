@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
-from typing import Optional
+from typing import Optional, Sequence
 from ordered_set import OrderedSet
+from string import ascii_uppercase
 
 
 class Term(ABC):
@@ -42,7 +43,7 @@ class Term(ABC):
         pass
 
     @abstractmethod
-    def unify(self) -> 'Term':
+    def unify(self, alphabet: Sequence[str] = ascii_uppercase) -> 'Term':
         """Unify of Term for hash and equal (rename Vars)"""
         pass
 
