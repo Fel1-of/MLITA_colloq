@@ -49,6 +49,9 @@ class Operator(Term):
     def __eq__(self, other) -> bool:
         return str(self.unify()) == str(other.unify())
 
+    def __hash__(self):
+        return hash(str(self.unify()))
+
     def substitute(self, **kwargs: dict[str, 'Term']) -> Term:
         return self.__class__(*self._args.substitute(**kwargs))
 
