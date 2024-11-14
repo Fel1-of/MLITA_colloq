@@ -38,7 +38,8 @@ def _bfs(
                 result_list.append(some_target)
                 return
     new_input_terms = OrderedSet(sorted(new_input_terms, key=lambda term: len(str(term))))
-    _bfs(new_input_terms, target_term, result_list)
+    if len(new_input_terms) > len(input_terms):
+        _bfs(new_input_terms, target_term, result_list)
 
 
 def _find_history_of_term(
