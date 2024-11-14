@@ -1,5 +1,4 @@
-from typing import Optional, Callable
-from functools import wraps
+from typing import Optional
 from app.terms.abstract.term import Term
 from app.terms.implication import Arrow
 from .syllogism_result import SyllogismResult
@@ -7,22 +6,6 @@ from string import ascii_lowercase
 
 
 SYLLOGISM_NAME = 'modus ponens'
-
-
-def _check_modus_ponens_arguments(
-        modus_ponens: Callable[[Arrow, Term], Optional[SyllogismResult]]
-) -> Callable[[Term, Term], Optional[SyllogismResult]]:
-    @wraps(modus_ponens)
-    def wrapper(term1: Term, term2: Term) -> Optional[Term]:
-        if isinstance(term1, Arrow) and not isinstance(term2, Arrow):
-            return modus_ponens(term1, term2)
-        elif isinstance(term2, Arrow) and not isinstance(term1, Arrow):
-            return modus_ponens(term2, term1)
-        elif isinstance(term1, Arrow) and isinstance(term2, Arrow):
-            return modus_ponens(term1, term2) or modus_ponens(term2, term1)
-        else:
-            return None
-    return wrapper
 
 
 def modus_ponens(implication: Arrow, premise: Term) -> Optional[SyllogismResult]:
