@@ -43,7 +43,7 @@ class Var(Term):
         return deepcopy(kwargs.get(self.name, self))
 
     def get_substitution_map(self, other: 'Term') -> Optional[dict[str, 'Term']]:
-        if isinstance(other, Var) and other.name:
+        if isinstance(other, Var) and self.name == other.name:
             return {}
         return {self.name: other}
 
