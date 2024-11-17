@@ -43,80 +43,102 @@ def parse(string: str) -> Term:
     s = string.replace(' ', '')
     stack = []
     output = []
-
+    
     while s:
         token, s = get_next_token(s)
         if token is None:
             break
-
+            
         if isinstance(token, Var):
             output.append(token)
         elif token == '!':
-            operand = output.pop() if output else None
-            output.append(Not(operand))
+            stack.append(token)
         elif token == '(':
             stack.append(token)
         elif token == ')':
             while stack and stack[-1] != '(':
                 op = stack.pop()
-                right = output.pop() if output else None
-                left = output.pop() if output else None
-                if left is None or right is None:
-                    raise ValueError('Invalid expression: empty operand')
-                if op == '*':
-                    output.append(And(left, right))
-                elif op == '|':
-                    output.append(Or(left, right))
-                elif op == '+':
-                    output.append(Xor(left, right))
-                elif op == '>':
-                    output.append(Arrow(left, right))
-                elif op == '=':
-                    output.append(Equal(left, right))
+                if op == '!':
+                    operand = output.pop() if output else None
+                    if operand is None:
+                        raise ValueError('Invalid expression: empty operand')
+                    output.append(Not(operand))
+                else:
+                    right = output.pop() if output else None
+                    left = output.pop() if output else None
+                    if left is None or right is None:
+                        raise ValueError('Invalid expression: empty operand')
+                    if op == '*':
+                        output.append(And(left, right))
+                    elif op == '|':
+                        output.append(Or(left, right))
+                    elif op == '+':
+                        output.append(Xor(left, right))
+                    elif op == '>':
+                        output.append(Arrow(left, right))
+                    elif op == '=':
+                        output.append(Equal(left, right))
+            
             if not stack or stack[-1] != '(':
                 raise ValueError('Mismatched parentheses')
             stack.pop()
-
-            if not output or (len(output) > 0 and isinstance(output[-1], Not)):
-                raise ValueError('Invalid expression: empty parentheses')
-
-        else:
-            while stack and precedence.get(stack[-1], -1) >= precedence[token]:
+            
+            while stack and stack[-1] == '!':
                 op = stack.pop()
-                right = output.pop() if output else None
-                left = output.pop() if output else None
-                if left is None or right is None:
+                operand = output.pop() if output else None
+                if operand is None:
                     raise ValueError('Invalid expression: empty operand')
-                if op == '*':
-                    output.append(And(left, right))
-                elif op == '|':
-                    output.append(Or(left, right))
-                elif op == '+':
-                    output.append(Xor(left, right))
-                elif op == '>':
-                    output.append(Arrow(left, right))
-                elif op == '=':
-                    output.append(Equal(left, right))
+                output.append(Not(operand))
+                
+        else:
+            while stack and stack[-1] != '(' and precedence.get(stack[-1], -1) >= precedence[token]:
+                op = stack.pop()
+                if op == '!':
+                    operand = output.pop() if output else None
+                    if operand is None:
+                        raise ValueError('Invalid expression: empty operand')
+                    output.append(Not(operand))
+                else:
+                    right = output.pop() if output else None
+                    left = output.pop() if output else None
+                    if left is None or right is None:
+                        raise ValueError('Invalid expression: empty operand')
+                    if op == '*':
+                        output.append(And(left, right))
+                    elif op == '|':
+                        output.append(Or(left, right))
+                    elif op == '+':
+                        output.append(Xor(left, right))
+                    elif op == '>':
+                        output.append(Arrow(left, right))
+                    elif op == '=':
+                        output.append(Equal(left, right))
             stack.append(token)
-
+    
     while stack:
         op = stack.pop()
-        right = output.pop() if output else None
-        left = output.pop() if output else None
-        if left is None or right is None:
-            raise ValueError('Invalid expression: empty operand')
-        if op == '*':
-            output.append(And(left, right))
-        elif op == '|':
-            output.append(Or(left, right))
-        elif op == '+':
-            output.append(Xor(left, right))
-        elif op == '>':
-            output.append(Arrow(left, right))
-        elif op == '=':
-            output.append(Equal(left, right))
-
+        if op == '!':
+            operand = output.pop() if output else None
+            if operand is None:
+                raise ValueError('Invalid expression: empty operand')
+            output.append(Not(operand))
+        else:
+            right = output.pop() if output else None
+            left = output.pop() if output else None
+            if left is None or right is None:
+                raise ValueError('Invalid expression: empty operand')
+            if op == '*':
+                output.append(And(left, right))
+            elif op == '|':
+                output.append(Or(left, right))
+            elif op == '+':
+                output.append(Xor(left, right))
+            elif op == '>':
+                output.append(Arrow(left, right))
+            elif op == '=':
+                output.append(Equal(left, right))
+    
     if len(output) != 1:
         raise ValueError('Invalid expression')
-
+    
     return output[0]

@@ -55,3 +55,14 @@ def test_base_expressions(expression, expected_output):
 ])
 def test_expressions(expression, expected_output):
     assert str(parse(expression)) == str(expected_output)
+
+@pytest.mark.parametrize('expression, expected_output', [
+    ('!!!A', Not(Not(Not(Var('A'))))),
+    ('!A', Not(Var('A'))),
+    ('!(!A)', Not(Not(Var('A')))),
+    ('A|!B', Or(Var('A'), Not(Var('B')))),
+    ('!(A|B)', Not(Or(Var('A'), Var('B')))),
+    ('!A|B', Or(Not(Var('A')), Var('B'))),
+])
+def test_negation_expressions(expression, expected_output):
+    assert str(parse(expression)) == str(expected_output)
