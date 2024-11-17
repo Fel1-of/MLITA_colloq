@@ -56,6 +56,7 @@ def test_base_expressions(expression, expected_output):
 def test_expressions(expression, expected_output):
     assert str(parse(expression)) == str(expected_output)
 
+
 @pytest.mark.parametrize('expression, expected_output', [
     ('!!!A', Not(Not(Not(Var('A'))))),
     ('!A', Not(Var('A'))),

@@ -43,12 +43,12 @@ def parse(string: str) -> Term:
     s = string.replace(' ', '')
     stack = []
     output = []
-    
+
     while s:
         token, s = get_next_token(s)
         if token is None:
             break
-            
+
         if isinstance(token, Var):
             output.append(token)
         elif token == '!':
@@ -78,20 +78,22 @@ def parse(string: str) -> Term:
                         output.append(Arrow(left, right))
                     elif op == '=':
                         output.append(Equal(left, right))
-            
+
             if not stack or stack[-1] != '(':
                 raise ValueError('Mismatched parentheses')
             stack.pop()
-            
+
             while stack and stack[-1] == '!':
                 op = stack.pop()
                 operand = output.pop() if output else None
                 if operand is None:
                     raise ValueError('Invalid expression: empty operand')
                 output.append(Not(operand))
-                
+
         else:
-            while stack and stack[-1] != '(' and precedence.get(stack[-1], -1) >= precedence[token]:
+            while stack \
+                and stack[-1] != '(' \
+                    and precedence.get(stack[-1], -1) >= precedence[token]:
                 op = stack.pop()
                 if op == '!':
                     operand = output.pop() if output else None
@@ -114,7 +116,7 @@ def parse(string: str) -> Term:
                     elif op == '=':
                         output.append(Equal(left, right))
             stack.append(token)
-    
+
     while stack:
         op = stack.pop()
         if op == '!':
@@ -137,8 +139,8 @@ def parse(string: str) -> Term:
                 output.append(Arrow(left, right))
             elif op == '=':
                 output.append(Equal(left, right))
-    
+
     if len(output) != 1:
         raise ValueError('Invalid expression')
-    
+
     return output[0]
