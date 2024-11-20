@@ -1,8 +1,12 @@
 from typing import Optional
-from ordered_set import OrderedSet
+from sortedcontainers import SortedSet
 from app.utils.syllogism_result import SyllogismResult
 from app.utils.modus_ponens import modus_ponens
 from app.terms import Term
+
+
+def _sorting_heuristics_key(term: Term) -> int:
+    return len(str(term))
 
 
 def _is_target(term: Term, target_term: Term) -> Optional[SyllogismResult]:
@@ -18,18 +22,24 @@ def _is_target(term: Term, target_term: Term) -> Optional[SyllogismResult]:
 
 
 def _bfs(
-    input_terms: OrderedSet[Term], target_term: Term, result_list: list[SyllogismResult],
+    old_terms: SortedSet[Term],
+    last_terms: SortedSet[Term],
+    target_term: Term,
+    result_list: list[SyllogismResult],
 ) -> None:
-    new_input_terms = input_terms.copy()
-    for term1 in input_terms:
-        for term2 in input_terms:
-            syllogism_result = modus_ponens(term1, term2)
+    new_terms = SortedSet(key=_sorting_heuristics_key)
+    old_terms.update(last_terms)
+    for old_term in old_terms:
+        for last_term in last_terms:
+            syllogism_result = (
+                modus_ponens(old_term, last_term) or modus_ponens(last_term, old_term)
+            )
             if syllogism_result is None:
                 continue
             new_term = syllogism_result.output_term
-            length_before = len(new_input_terms)
-            new_input_terms.add(new_term)
-            length_after = len(new_input_terms)
+            length_before = len(new_terms)
+            new_terms.add(new_term)
+            length_after = len(new_terms)
             if length_before == length_after:
                 continue
             result_list.append(syllogism_result)
@@ -37,13 +47,18 @@ def _bfs(
             if some_target is not None:
                 result_list.append(some_target)
                 return
-    new_input_terms = OrderedSet(sorted(new_input_terms, key=lambda term: len(str(term))))
-    if len(new_input_terms) > len(input_terms):
-        _bfs(new_input_terms, target_term, result_list)
+    new_terms.difference_update(old_terms)
+    if new_terms:
+        _bfs(old_terms, new_terms, target_term, result_list)
+    else:
+        if len(old_terms) == 6:
+            raise ValueError('DOUBLE CRINGE')
+        if target_term not in old_terms.union(new_terms):
+            raise ValueError(f'CRINGE {len(old_terms)}')
 
 
 def _find_history_of_term(
-    term: Term, result_list: list[SyllogismResult], history: list[SyllogismResult]
+    term: Term, result_list: list[SyllogismResult], history: list[SyllogismResult],
 ):
     for syllogism_result in result_list:
         if term != syllogism_result.output_term:
@@ -74,9 +89,10 @@ def bfs(
             )
         )
         return result_list
-    input_terms = OrderedSet(input_terms)
-    _bfs(input_terms, target_term, result_list)
-    history = []
-    _find_history_of_term(target_term, reversed(result_list), history)
-    history = reversed(history)
-    return history
+    input_terms = SortedSet(input_terms, key=_sorting_heuristics_key)
+    _bfs(input_terms, input_terms, target_term, result_list)
+    return result_list
+    # history = []
+    # _find_history_of_term(target_term, reversed(result_list), history)
+    # history = reversed(history)
+    # return history
