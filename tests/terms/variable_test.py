@@ -56,6 +56,11 @@ def test_str():
     assert str(v) == 'A'
 
 
+def test_repr():
+    v = Var('A')
+    assert repr(v) == "Var('A')"
+
+
 def test_humanize():
     v = Var('A')
     assert v.humanize() == 'A'

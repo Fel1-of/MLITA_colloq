@@ -13,6 +13,10 @@ def test_complex_str():
     assert str(Or(Or(Var('A'), Var('B')), Var('C'))) == '(A | B) | C'
 
 
+def test_repr():
+    assert repr(Or(Var('A'), Var('B'))) == "Or(Var('A'), Var('B'))"
+
+
 def test_humanize():
     assert Or(Var('A'), Var('B')).humanize() == 'A или B'
 

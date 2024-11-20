@@ -39,9 +39,7 @@ class Operator(Term):
             self._args.append(arg)
 
     def __copy__(self):
-        raise NotImplementedError(
-            'Operator is not copyable. Use deepcopy instead'
-        )
+        raise NotImplementedError('Operator is not copyable. Use deepcopy instead')
 
     def __deepcopy__(self, memo) -> Term:
         return self.__class__(*deepcopy(self._args))
@@ -52,6 +50,9 @@ class Operator(Term):
     def __hash__(self):
         return hash(str(self.unify()))
 
+    def __repr__(self) -> str:
+        return f'{self.__class__.__name__}({", ".join(map(repr, self._args))})'
+
     def substitute(self, **kwargs: dict[str, 'Term']) -> Term:
         return self.__class__(*self._args.substitute(**kwargs))
 
@@ -60,6 +61,7 @@ class Operator(Term):
             return None
 
         new_substitution_map: dict[str, 'Term'] = {}
+
         for term1, term2 in zip(self._args, other._args):
             if isinstance(term1, Var):
                 if term1.name not in new_substitution_map:
@@ -68,15 +70,20 @@ class Operator(Term):
                     new_substitution_map[term1.name] = term2
                     continue
                 continue
+
             if type(term1) is type(term2):
                 local_substitute_map = term1.get_substitution_map(term2)
+
                 if local_substitute_map is None:
                     return None
+
                 new_substitution_map.update(local_substitute_map)
                 continue
             return None
-        self_substituted = self.substitute(**new_substitution_map)
-        if str(self_substituted) != str(other):
+
+        substituted = self.substitute(**new_substitution_map)
+
+        if str(substituted) != str(other):
             return None
         return new_substitution_map
 

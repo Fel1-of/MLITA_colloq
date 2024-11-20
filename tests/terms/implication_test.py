@@ -9,6 +9,14 @@ def test_str_with_not():
     assert str(Arrow(Var('A'), Not(Var('B')))) == 'A > !B'
 
 
+def test_repr():
+    assert repr(Arrow(Var('A'), Var('B'))) == "Arrow(Var('A'), Var('B'))"
+
+
+def test_repr_with_not():
+    assert repr(Arrow(Var('A'), Not(Var('B')))) == "Arrow(Var('A'), Not(Var('B')))"
+
+
 def test_humanize():
     assert Arrow(Var('A'), Var('B')).humanize() == 'если A, то B'
 
