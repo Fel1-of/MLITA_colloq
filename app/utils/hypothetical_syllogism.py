@@ -6,7 +6,10 @@ from .syllogism_result import SyllogismResult
 SYLLOGISM_NAME = 'hypothetical syllogism'
 
 
-def hypothetical_syllogism(implication_1: Arrow, implication_2: Arrow) -> list[SyllogismResult]:
+def hypothetical_syllogism(
+        implication_1: Arrow,
+        implication_2: Arrow,
+) -> list[SyllogismResult]:
     if not isinstance(implication_1, Arrow) or not isinstance(implication_2, Arrow):
         return []
     impl_1 = implication_1.unify(ascii_uppercase)

@@ -35,4 +35,5 @@ def test_hypothetical_syllogism_with_axioms():
     impl2 = Arrow(Not(A), Arrow(A, B))
     outputs = hypothetical_syllogism(impl1, impl2)
     assert len(outputs) == 1
-    assert outputs[0].output_term == Arrow(And(Var('A'), Not(Var('B'))), Arrow(Var('B'), Var('C')))
+    res = Arrow(And(Var('A'), Not(Var('B'))), Arrow(Var('B'), Var('C')))
+    assert outputs[0].output_term == res
