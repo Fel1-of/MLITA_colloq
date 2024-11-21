@@ -62,7 +62,7 @@ def process_operator(op: str, output: List[Term]) -> None:
 def parse(s: str) -> Term:
     # Replace all whitespaces
     s = s.translate({ord(c): None for c in string.whitespace})
-    
+
     stack: List[str] = []
     output: List[Term] = []
 
