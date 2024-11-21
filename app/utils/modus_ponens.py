@@ -1,7 +1,6 @@
 from typing import Iterable, Optional
 from app.terms.abstract.term import Term
-from app.terms.implication import Arrow
-from .syllogism_result import SyllogismResult, ModusPonensResult
+from .syllogism_result import ModusPonensResult
 from string import ascii_lowercase
 
 

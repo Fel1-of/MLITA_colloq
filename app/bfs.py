@@ -21,14 +21,14 @@ def _is_target(
     return SyllogismResult(
         syllogism_name='substitute',
         input_terms=[ponens_res],
-        substitution=subs,
+        substitutions=subs,
         output_term=target_term,
     )
 
 
 def _bfs(
-    curr_terms: dict[Term, ModusPonensResult],
-    last_terms: dict[Term, ModusPonensResult],
+    curr_terms: dict[Term, ModusPonensResult | SyllogismResult],
+    last_terms: dict[Term, ModusPonensResult | SyllogismResult],
     target_term: Term,
 ) -> ModusPonensResult | SyllogismResult:
     new_terms: dict[Term, ModusPonensResult] = {}
@@ -118,8 +118,8 @@ def bfs(
         match s:
             case SyllogismResult('axiom', _, _, _):
                 pass
-            case SyllogismResult('substitute', [ponens_res], _):
-                queue.append(ponens_res)
+            case SyllogismResult('substitute', [modus_ponens], _, _):
+                queue.append(modus_ponens)
             case ModusPonensResult(_, _, None, None, _):
                 pass
             case ModusPonensResult(_, _, premise, implication, _):
