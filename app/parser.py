@@ -1,7 +1,15 @@
+import string
 from typing import Tuple, List, Optional, Union
 from string import ascii_lowercase
 from .terms import (
-    Term, Var, Arrow, And, Or, Not, Xor, Equal,
+    Term,
+    Var,
+    Arrow,
+    And,
+    Or,
+    Not,
+    Xor,
+    Equal,
 )
 
 
@@ -52,7 +60,9 @@ def process_operator(op: str, output: List[Term]) -> None:
 
 
 def parse(s: str) -> Term:
-    s = s.replace(' ', '').replace('\t', '').replace('\n', '')
+    # Replace all whitespaces
+    s = s.translate({ord(c): None for c in string.whitespace})
+    
     stack: List[str] = []
     output: List[Term] = []
 
@@ -78,9 +88,11 @@ def parse(s: str) -> Term:
                     raise ValueError('Invalid expression: empty operand')
                 output.append(Not(operand))
         else:
-            while (stack and
-                   stack[-1] != '(' and
-                   precedence.get(stack[-1], -1) >= precedence[token]):
+            while (
+                stack
+                and stack[-1] != '('
+                and precedence.get(stack[-1], -1) >= precedence[token]
+            ):
                 op = stack.pop()
                 process_operator(op, output)
             stack.append(token)
