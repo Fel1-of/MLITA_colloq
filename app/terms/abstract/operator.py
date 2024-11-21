@@ -45,6 +45,8 @@ class Operator(Term):
         return self.__class__(*deepcopy(self._args))
 
     def __eq__(self, other) -> bool:
+        if not isinstance(other, Operator):
+            return NotImplemented
         return str(self.unify()) == str(other.unify())
 
     def __hash__(self):
