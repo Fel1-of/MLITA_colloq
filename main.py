@@ -7,7 +7,12 @@ from app.utils.stats import get_stats_str
 
 def main():
     user_input = input('Введите выражение: ')
-    target_expression = parse(user_input)
+    try:
+        target_expression = parse(user_input)
+    except Exception as e:
+        print('Неправильное выражение:')
+        print(e)
+        return
     bfs_result = bfs(modus_ponens_axioms, target_expression)
     pretty_str = pretty(bfs_result)
     stats_str = get_stats_str(bfs_result)
