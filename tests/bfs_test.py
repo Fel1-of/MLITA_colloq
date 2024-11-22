@@ -7,6 +7,7 @@ B = Var('b')
 C = Var('c')
 
 
+@pytest.mark.timeout(2, func_only=True)
 @pytest.mark.parametrize(
     ('name', 'target'),
     [
@@ -21,7 +22,6 @@ C = Var('c')
         ('A10', Arrow(Not(A), Arrow(A, B))),  # A10
     ],
 )
-@pytest.mark.timeout(2)
 def test_modus_penis(name, target, axioms):
     arrowed = target.to_implication_view().unify()
     bfs_result = bfs(axioms, target)
@@ -29,13 +29,13 @@ def test_modus_penis(name, target, axioms):
     assert str(bfs_result[-1].output_term.unify()) == str(arrowed)
 
 
-@pytest.mark.timeout(2)
+@pytest.mark.timeout(2, func_only=True)
 def test_example2(axioms):
     target = Arrow(And(A, B), A).to_implication_view().unify()
     assert str(bfs(axioms, target)[-1].output_term) == str(target)
 
 
-@pytest.mark.timeout(2)
+@pytest.mark.timeout(2, func_only=True)
 def test_example3(axioms):
     A1 = Arrow(A, Arrow(B, A))
     A2 = Arrow(Arrow(A, Arrow(B, C)), Arrow(Arrow(A, B), Arrow(A, C)))
