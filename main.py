@@ -19,7 +19,7 @@ def main():
     pretty_str = pretty(bfs_result)
     stats_str = get_stats_str(bfs_result)
     total_time = time.perf_counter() - start_time
-    print(f'Время выполнения: {total_time:.4f} секунд')
+    print(f'Время выполнения: {total_time:.6f} секунд')
     print(pretty_str)
     print(stats_str)
 
