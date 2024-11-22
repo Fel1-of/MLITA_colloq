@@ -108,6 +108,11 @@ BinaryOperator <|.. Equal
 
 ![image](https://github.com/user-attachments/assets/3326a185-01bc-4a22-8856-41cb08cdebc0)
 
+Протокол вывода A11.
+
+![image](https://github.com/user-attachments/assets/91818109-f3eb-4cf5-a20c-b8725c76a00a)
+
+
 ## Задание 2.
 В процессе выполнения.
 
