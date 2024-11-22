@@ -1,5 +1,5 @@
 import pytest
-from app.terms import Arrow, Var, Not
+from app.terms import Arrow, Var, Not, Or
 from app.bfs import bfs
 from app.syllologism_pretty_print import pretty
 
@@ -8,7 +8,7 @@ B = Var('b')
 C = Var('c')
 
 
-def test_pretty(axioms):
+def test_pretty_AA(axioms):
     target = Arrow(Var('A'), Var('A'))
     arrowed = target.to_implication_view().unify()
     bfs_result = bfs(axioms, arrowed)
@@ -32,6 +32,17 @@ def test_pretty(axioms):
     assert pretty_result == s
 
 
+def test_pretty_A11(axioms):
+    target = Or(A, Not(A))
+    arrowed = target.to_implication_view().unify()
+    bfs_result = bfs(axioms, arrowed)
+    pretty_result = pretty(bfs_result)
+    print()
+    print(pretty_result)
+    s = """\
+"""
+    assert pretty_result == s
+
 @pytest.fixture()
 def axioms():
     A1 = Arrow(A, Arrow(B, A))
@@ -42,3 +53,4 @@ def axioms():
     TT = Arrow(Not(A), Arrow(A, B))  # noqa: F841
     GA = Arrow(Arrow(Arrow(A, B), Arrow(B, C)), Arrow(A, C))  # noqa: F841
     return [A1, A2, A3]
+
