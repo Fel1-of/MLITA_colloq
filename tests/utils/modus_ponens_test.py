@@ -34,7 +34,7 @@ def test_modus_ponens_not_funny():
     premise = create_axiom(B)
     modus_ponens_results = modus_ponens(implication, premise)
     assert len(modus_ponens_results) == 1
-    assert (modus_ponens_results[0].output_term == Var('A'))
+    assert (modus_ponens_results[0].output_term == Var('a'))
 
 
 def test_two_arrows():
@@ -48,5 +48,5 @@ def test_two_arrows():
     res2 = modus_ponens(impl2, impl1)
     assert len(res2) == 1
     res2 = res2[0]
-    assert str(res1.output_term) == 'A'
-    assert str(res2.output_term) == 'A > (B > C)'
+    assert str(res1.output_term) == 'a'
+    assert str(res2.output_term) == 'a > (b > c)'

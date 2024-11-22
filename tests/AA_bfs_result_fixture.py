@@ -44,7 +44,7 @@ def AA_bfs_result():
             ],
             substitutions=[{}, {'a': Var('A'), 'b': Var('B'), 'c': Var('A')}],
             output_term=Arrow(
-                Arrow(Var('A'), Var('B')), Arrow(Var('A'), Var('A'))
+                Arrow(Var('a'), Var('b')), Arrow(Var('a'), Var('a'))
             ),
         ),
         SyllogismResult(
@@ -89,11 +89,11 @@ def AA_bfs_result():
                         {'a': Var('A'), 'b': Var('B'), 'c': Var('A')},
                     ],
                     output_term=Arrow(
-                        Arrow(Var('A'), Var('B')), Arrow(Var('A'), Var('A'))
+                        Arrow(Var('a'), Var('b')), Arrow(Var('a'), Var('a'))
                     ),
                 ),
             ],
             substitutions=[{}, {'a': Var('A'), 'b': Arrow(Var('B'), Var('A'))}],
-            output_term=Arrow(Var('A'), Var('A')),
+            output_term=Arrow(Var('a'), Var('a')),
         ),
     ]

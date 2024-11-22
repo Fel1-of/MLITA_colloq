@@ -1,4 +1,5 @@
 from app.utils.syllogism_result import SyllogismResult
+from string import ascii_lowercase
 
 
 def pretty(syllogism_list: list[SyllogismResult]) -> str:
@@ -18,12 +19,12 @@ def pretty(syllogism_list: list[SyllogismResult]) -> str:
                 )
                 substitutions_desc = ' '.join(
                     f"""{i + 1} """
-                    f"""{", ".join(f"{key}: ({sub_t})" for key, sub_t in subs.items())}"""
+                    f"""{", ".join(f"{key.lower()}: ({str(sub_t).lower()})" for key, sub_t in subs.items())}"""  # noqa: E501
                     for i, subs in enumerate(substitutions)
                     if subs
                 )
                 substituted_terms_desc = ', '.join(
-                    f'{i + 1}=[{syll.output_term.substitute(**subs)}]'
+                    f'{i + 1}=[{syll.output_term.unify(ascii_lowercase).substitute(**subs).unify()}]'  # noqa: E501
                     for i, (syll, subs) in enumerate(
                         zip(input_terms, substitutions)
                     )

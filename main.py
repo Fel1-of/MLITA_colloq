@@ -14,6 +14,7 @@ def main():
         print(e)
         return
     bfs_result = bfs(modus_ponens_axioms, target_expression)
+    print(repr(bfs_result))
     pretty_str = pretty(bfs_result)
     stats_str = get_stats_str(bfs_result)
     print(pretty_str)

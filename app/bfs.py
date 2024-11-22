@@ -1,5 +1,6 @@
 from collections import deque
 from typing import Optional
+from string import ascii_uppercase, ascii_lowercase
 
 # from sortedcontainers import SortedSet
 from app.utils.syllogism_result import SyllogismResult, ModusPonensResult
@@ -14,7 +15,8 @@ def _sorting_heuristics_key(term: Term) -> int:
 def _is_target(
     ponens_res: ModusPonensResult, target_term: Term
 ) -> Optional[SyllogismResult]:
-    term = ponens_res.output_term
+    term = ponens_res.output_term.unify(ascii_uppercase)
+    target_term = target_term.unify(ascii_lowercase)
     subs = term.get_substitution_map(target_term)
     if subs is None:
         return None
@@ -34,8 +36,9 @@ def _bfs(
     new_terms: dict[Term, ModusPonensResult] = {}
     for old_modus in curr_terms.values():
         for last_modus in last_terms.values():
-            syllogism_list = modus_ponens(last_modus, old_modus) + \
-                modus_ponens(old_modus, last_modus)
+            syllogism_list = modus_ponens(last_modus, old_modus) + modus_ponens(
+                old_modus, last_modus
+            )
             for syllogism in syllogism_list:
                 new = syllogism.output_term
                 if new in curr_terms:
@@ -66,11 +69,16 @@ def bfs(
         axiom: SyllogismResult(
             syllogism_name='axiom',
             input_terms=[],
-            output_term=axiom,
+            output_term=axiom.unify(),
             substitutions=[],
         )
         for axiom in axioms
     }
+
+    for axiom in input_terms.values():
+        sub_result = _is_target(axiom, target_term)
+        if sub_result is not None:
+            return [sub_result]
 
     syllogism = _bfs(input_terms, input_terms, target_term)
 
