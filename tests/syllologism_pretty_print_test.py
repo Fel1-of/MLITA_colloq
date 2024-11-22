@@ -15,7 +15,21 @@ def test_pretty(axioms):
     pretty_result = pretty(bfs_result)
     print()
     print(pretty_result)
-    assert pretty_result == ''
+    s = """\
+0. axiom:\t(a > (b > c)) > ((a > b) > (a > c))
+1. axiom:\ta > (b > a)
+2. modus ponens:
+\tполучено (A > B) > (A > A)
+\tиз 1=[a > (b > a)], 2=[(a > (b > c)) > ((a > b) > (a > c))]
+\tподстановкой во 2 a: (A), b: (B), c: (A)
+\t1=[a > (b > a)], 2=[(A > (B > A)) > ((A > B) > (A > A))]
+3. axiom:\ta > (b > a)
+4. modus ponens:
+\tполучено A > A
+\tиз 1=[a > (b > a)], 2=[(A > B) > (A > A)]
+\tподстановкой во 2 a: (A), b: (B > A)
+\t1=[a > (b > a)], 2=[(A > B) > (A > A)]"""
+    assert pretty_result == s
 
 
 @pytest.fixture()
