@@ -2,7 +2,7 @@
 
 [![Coverage Status](https://coveralls.io/repos/github/Fel1-of/MLITA_colloq/badge.svg?branch=main)](https://coveralls.io/github/Fel1-of/MLITA_colloq?branch=main)
 
-Задание 1.
+##Задание 1.
 
 Была разработана система классов для работы с логичискими выражениями и очелевеченного их вывода. 
 
@@ -105,3 +105,20 @@ BinaryOperator <|.. Equal
 
 
 Протокол вывода А11.
+
+![image](https://github.com/user-attachments/assets/3326a185-01bc-4a22-8856-41cb08cdebc0)
+
+## Задание 2.
+В процессе выполнения.
+✓ Modus ponens:   			P, P→Q ⊢ Q
+✓ Modus tollens:    			P→Q, ⅂Q ⊢ ⅂P
+☓ Дизъюнктивный силлогизм		⅂P, P∨Q ⊢ Q
+✓ Гипотетический силлогизм		P→Q, Q→R ⊢ P→R
+☓ Разделительный силлогизм		P, P xor Q ⊢ ⅂Q
+☓ Простая конструктивная дилемма	P→R, Q→R, P∨Q ⊢ R
+☓ Сложная конструктивная дилемма	P→R, Q→T, P∨Q ⊢ R∨T
+☓ Простая деструктивная дилемма	P→R, P→Q, ⅂R∨⅂Q ⊢ ⅂P
+☓ Сложная деструктивная дилемма	P→R, Q→T, ⅂R∨⅂T ⊢ ⅂P∨⅂Q 
+
+## Задание 3.
+Не выполнено.
