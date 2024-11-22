@@ -23,8 +23,8 @@ def axioms():
     A1 = Arrow(A, Arrow(B, A))
     A2 = Arrow(Arrow(A, Arrow(B, C)), Arrow(Arrow(A, B), Arrow(A, C)))
     A3 = Arrow(Arrow(Not(B), Not(A)), Arrow(Arrow(Not(B), A), B))
-    B3 = Arrow(Arrow(A, B), Arrow(Arrow(A, Not(B)), Not(A)))
-    F4 = Arrow(Not(Not(A)), A)
-    TT = Arrow(Not(A), Arrow(A, B))
-    GA = Arrow(Arrow(Arrow(A, B), Arrow(B, C)), Arrow(A, C))
+    B3 = Arrow(Arrow(A, B), Arrow(Arrow(A, Not(B)), Not(A)))  # noqa: F841
+    F4 = Arrow(Not(Not(A)), A)  # noqa: F841
+    TT = Arrow(Not(A), Arrow(A, B))  # noqa: F841
+    GA = Arrow(Arrow(Arrow(A, B), Arrow(B, C)), Arrow(A, C))  # noqa: F841
     return [A1, A2, A3]
