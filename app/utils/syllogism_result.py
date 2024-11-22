@@ -25,7 +25,7 @@ def term_with_subs(term: Term, subs_str: str):
 class SyllogismResult:
     syllogism_name: str = ''
     input_terms: list['SyllogismResult'] = field(default_factory=list)
-    substitutions: dict[str, Term] = field(default_factory=dict)
+    substitutions: list[dict[str, Term]] = field(default_factory=list)
     output_term: Optional[Term] = None
 
     # def __str__(self):
@@ -59,10 +59,6 @@ class ModusPonensResult(SyllogismResult):
             [substitution_premise, substitution_impl],
             output_term,
         )
-        output_term: Term
-        premise: Optional['ModusPonensResult'] = None
-        implication: Optional['ModusPonensResult'] = None
-        substitution_impl: dict[str, Term] = field(default_factory=dict)
 
     @property
     def premise(self) -> 'ModusPonensResult':
@@ -82,16 +78,16 @@ class ModusPonensResult(SyllogismResult):
 
     @property
     def substitution_premise(self) -> dict[str, Term]:
-        return self.output_term[0]
+        return self.substitutions[0]
 
     @substitution_premise.setter
     def substitution_premise(self, value: dict[str, Term]) -> None:
-        self.output_term[0] = value
+        self.substitutions[0] = value
 
     @property
     def substitution_impl(self) -> dict[str, Term]:
-        return self.output_term[1]
+        return self.substitutions[1]
 
     @substitution_impl.setter
     def substitution_impl(self, value: dict[str, Term]) -> None:
-        self.output_term[1] = value
+        self.substitutions[1] = value
