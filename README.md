@@ -2,7 +2,7 @@
 
 [![Coverage Status](https://coveralls.io/repos/github/Fel1-of/MLITA_colloq/badge.svg?branch=main)](https://coveralls.io/github/Fel1-of/MLITA_colloq?branch=main)
 
-##Задание 1.
+## Задание 1.
 
 Была разработана система классов для работы с логичискими выражениями и очелевеченного их вывода. 
 
