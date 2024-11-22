@@ -45,7 +45,12 @@ class Operator(Term):
         return self.__class__(*deepcopy(self._args))
 
     def __eq__(self, other) -> bool:
+        if not isinstance(other, Operator):
+            return NotImplemented
         return str(self.unify()) == str(other.unify())
+
+    def __hash__(self):
+        return hash(str(self.unify()))
 
     def __repr__(self) -> str:
         return f'{self.__class__.__name__}({", ".join(map(repr, self._args))})'
@@ -61,9 +66,11 @@ class Operator(Term):
 
         for term1, term2 in zip(self._args, other._args):
             if isinstance(term1, Var):
-                if isinstance(term2, Var) and term1 == term2:
+                if term1.name not in new_substitution_map:
+                    if isinstance(term2, Var) and term1 == term2:
+                        continue
+                    new_substitution_map[term1.name] = term2
                     continue
-                new_substitution_map[term1.name] = term2
                 continue
 
             if type(term1) is type(term2):

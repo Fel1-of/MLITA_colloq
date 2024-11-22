@@ -20,6 +20,10 @@ class Term(ABC):
         pass
 
     @abstractmethod
+    def __hash__(self):
+        pass
+
+    @abstractmethod
     def humanize(self) -> str:
         """String in russian language"""
         return ''
