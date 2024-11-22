@@ -79,14 +79,12 @@ def bfs(
     while queue:
         s = queue.popleft()
         result_list.append(s)
-        print(repr(s))
         match s:
             case SyllogismResult('axiom', _, _, _):
                 pass
             case SyllogismResult('substitute', [modus_ponens], _, _):
                 queue.append(modus_ponens)
             case SyllogismResult('modus ponens', [premise, implication], _, _):
-                print(repr(premise))
                 queue.append(premise)
                 queue.append(implication)
             case _:
