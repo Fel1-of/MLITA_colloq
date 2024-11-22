@@ -12,22 +12,18 @@ def test_stats_AA(axioms):
     target = Arrow(Var('A'), Var('A'))
     arrowed = target.to_implication_view().unify()
     bfs_result = bfs(axioms, arrowed)
-    pretty_result = get_stats_str(bfs_result)
-    print()
-    print(pretty_result)
+    stats_str = get_stats_str(bfs_result)
     s = 'Не тривиальных силлогизмов: 2'
-    assert pretty_result == s
+    assert stats_str == s
 
 
 def test_stats_A11(axioms):
     target = Or(A, Not(A))
     arrowed = target.to_implication_view().unify()
     bfs_result = bfs(axioms, arrowed)
-    pretty_result = get_stats_str(bfs_result)
-    print()
-    print(pretty_result)
+    stats_str = get_stats_str(bfs_result)
     s = 'Не тривиальных силлогизмов: 2'
-    assert pretty_result == s
+    assert stats_str == s
 
 
 @pytest.fixture()
