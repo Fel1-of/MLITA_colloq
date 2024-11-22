@@ -21,7 +21,7 @@ def _is_target(
     return SyllogismResult(
         syllogism_name='substitute',
         input_terms=[ponens_res],
-        substitutions=subs,
+        substitutions=[subs],
         output_term=target_term,
     )
 
