@@ -110,6 +110,7 @@ BinaryOperator <|.. Equal
 
 ## Задание 2.
 В процессе выполнения.
+
 ✓ Modus ponens:   			P, P→Q ⊢ Q
 
 ✓ Modus tollens:    			P→Q, ⅂Q ⊢ ⅂P
