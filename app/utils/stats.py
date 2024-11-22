@@ -15,4 +15,4 @@ def count_non_trivial_syllogisms(syllogism_list: list[SyllogismResult]) -> int:
 def get_stats_str(syllogism_list: list[SyllogismResult]) -> str:
     non_trivial_count = count_non_trivial_syllogisms(syllogism_list)
 
-    return f'Не тривиальных силлогизмов: {non_trivial_count}'
+    return f'Нетривиальных силлогизмов: {non_trivial_count}'
