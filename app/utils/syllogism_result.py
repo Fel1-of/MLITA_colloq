@@ -38,9 +38,60 @@ class SyllogismResult:
 
 
 @dataclass
-class ModusPonensResult:
-    output_term: Term
-    syllogism_name: str = 'modus ponens'
-    premise: Optional['ModusPonensResult'] = None
-    implication: Optional['ModusPonensResult'] = None
-    substitution: dict[str, Term] = field(default_factory=dict)
+class ModusPonensResult(SyllogismResult):
+    def __init__(
+        self,
+        output_term: Term,
+        premise: Optional['ModusPonensResult'],
+        implication: Optional['ModusPonensResult'],
+        substitution_impl: Optional[dict[str, Term]] = None,
+        substitution_premise: Optional[dict[str, Term]] = None,
+    ) -> None:
+        syllogism_name: str = 'modus ponens'
+        if substitution_impl is None:
+            substitution_impl = {}
+        if substitution_premise is None:
+            substitution_premise = {}
+
+        super().__init__(
+            syllogism_name,
+            [premise, implication],
+            [substitution_premise, substitution_impl],
+            output_term,
+        )
+        output_term: Term
+        premise: Optional['ModusPonensResult'] = None
+        implication: Optional['ModusPonensResult'] = None
+        substitution_impl: dict[str, Term] = field(default_factory=dict)
+
+    @property
+    def premise(self) -> 'ModusPonensResult':
+        return self.input_terms[0]
+
+    @premise.setter
+    def premise(self, value: 'ModusPonensResult') -> None:
+        self.input_terms[0] = value
+
+    @property
+    def implication(self) -> 'ModusPonensResult':
+        return self.input_terms[1]
+
+    @implication.setter
+    def implication(self, value: 'ModusPonensResult') -> None:
+        self.input_terms[1] = value
+
+    @property
+    def substitution_premise(self) -> dict[str, Term]:
+        return self.output_term[0]
+
+    @substitution_premise.setter
+    def substitution_premise(self, value: dict[str, Term]) -> None:
+        self.output_term[0] = value
+
+    @property
+    def substitution_impl(self) -> dict[str, Term]:
+        return self.output_term[1]
+
+    @substitution_impl.setter
+    def substitution_impl(self, value: dict[str, Term]) -> None:
+        self.output_term[1] = value

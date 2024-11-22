@@ -34,59 +34,24 @@ def _bfs(
     new_terms: dict[Term, ModusPonensResult] = {}
     for old_modus in curr_terms.values():
         for last_modus in last_terms.values():
-            syllogism = modus_ponens(old_modus, last_modus)
-            if syllogism is None:
-                continue
-            new = syllogism.output_term
-            if new in curr_terms:
-                continue
+            syllogism_list = modus_ponens(last_modus, old_modus) + \
+                modus_ponens(old_modus, last_modus)
+            for syllogism in syllogism_list:
+                new = syllogism.output_term
+                if new in curr_terms:
+                    continue
+                if new == target_term:
+                    return syllogism
+                if new in new_terms:
+                    continue
+                sub_result = _is_target(syllogism, target_term)
+                if sub_result is not None:
+                    return sub_result
 
-            if new == target_term:
-                return syllogism
-            if new in new_terms:
-                continue
-            sub_result = _is_target(syllogism, target_term)
-            if sub_result is not None:
-                return sub_result
-
-            new_terms[new] = syllogism
-
-    for old_modus in curr_terms.values():
-        for last_modus in last_terms.values():
-            syllogism = modus_ponens(last_modus, old_modus)
-            if syllogism is None:
-                continue
-            new = syllogism.output_term
-            if new in curr_terms:
-                continue
-
-            if new == target_term:
-                return syllogism
-            if new in new_terms:
-                continue
-            sub_result = _is_target(syllogism, target_term)
-            if sub_result is not None:
-                return sub_result
-
-            new_terms[new] = syllogism
+                new_terms[new] = syllogism
 
     curr_terms.update(last_terms)
     return _bfs(curr_terms, new_terms, target_term)
-
-
-# def _find_history_of_term(
-#     term: Term,
-#     result_list: list[SyllogismResult],
-#     history: list[SyllogismResult],
-# ):
-#     for syllogism_result in result_list:
-#         if term != syllogism_result.output_term:
-#             continue
-#         if syllogism_result in history:
-#             continue
-#         history.append(syllogism_result)
-#         for parent in syllogism_result.input_terms:
-#             _find_history_of_term(parent, result_list, history)
 
 
 def bfs(
@@ -120,9 +85,7 @@ def bfs(
                 pass
             case SyllogismResult('substitute', [modus_ponens], _, _):
                 queue.append(modus_ponens)
-            case ModusPonensResult(_, _, None, None, _):
-                pass
-            case ModusPonensResult(_, _, premise, implication, _):
+            case SyllogismResult('modus ponens', [premise, implication], _, _):
                 print(repr(premise))
                 queue.append(premise)
                 queue.append(implication)
@@ -131,7 +94,3 @@ def bfs(
 
     result_list.reverse()
     return result_list
-    # history = []
-    # _find_history_of_term(target_term, reversed(result_list), history)
-    # history = reversed(history)
-    # return history
