@@ -1,7 +1,7 @@
 from .abstract.term import Term
 from copy import copy, deepcopy
 from ordered_set import OrderedSet
-from string import ascii_uppercase
+from string import ascii_lowercase
 from typing import Optional, Sequence
 
 
@@ -53,6 +53,6 @@ class Var(Term):
     def vars(self) -> OrderedSet[str]:
         return OrderedSet(self.name)
 
-    def unify(self, alphabet: Sequence[str] = ascii_uppercase) -> Term:
+    def unify(self, alphabet: Sequence[str] = ascii_lowercase) -> Term:
         # AGAIN, SORRY. JUST SORRY.
         return self.__class__(alphabet[0])

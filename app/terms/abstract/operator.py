@@ -1,7 +1,7 @@
 from collections import UserList
 from copy import deepcopy
 from ordered_set import OrderedSet
-from string import ascii_uppercase
+from string import ascii_lowercase
 from typing import Optional, Sequence
 from .term import Term
 from app.terms.variable import Var
@@ -92,7 +92,7 @@ class Operator(Term):
     def vars(self) -> OrderedSet[str]:
         return self._args.vars()
 
-    def unify(self, alphabet: Sequence[str] = ascii_uppercase) -> Term:
+    def unify(self, alphabet: Sequence[str] = ascii_lowercase) -> Term:
         vars: OrderedSet[str] = self.vars()
         # I AM VERY SORRY FOR THIS CODE. PLEASE DONT KILL ME
         # I REALLY DONT WANT TO WRITE THIS PART THAT WAY

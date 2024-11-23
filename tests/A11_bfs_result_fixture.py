@@ -44,7 +44,7 @@ def A11_bfs_result():
             ],
             substitutions=[{}, {'a': Var('A'), 'b': Var('B'), 'c': Var('A')}],
             output_term=Arrow(
-                Arrow(Var('A'), Var('B')), Arrow(Var('A'), Var('A'))
+                Arrow(Var('a'), Var('b')), Arrow(Var('a'), Var('a'))
             ),
         ),
         SyllogismResult(
@@ -89,12 +89,12 @@ def A11_bfs_result():
                         {'a': Var('A'), 'b': Var('B'), 'c': Var('A')},
                     ],
                     output_term=Arrow(
-                        Arrow(Var('A'), Var('B')), Arrow(Var('A'), Var('A'))
+                        Arrow(Var('a'), Var('b')), Arrow(Var('a'), Var('a'))
                     ),
                 ),
             ],
             substitutions=[{}, {'a': Var('A'), 'b': Arrow(Var('B'), Var('A'))}],
-            output_term=Arrow(Var('A'), Var('A')),
+            output_term=Arrow(Var('a'), Var('a')),
         ),
         SyllogismResult(
             syllogism_name='substitute',
@@ -137,8 +137,8 @@ def A11_bfs_result():
                                 {'a': Var('A'), 'b': Var('B'), 'c': Var('A')},
                             ],
                             output_term=Arrow(
-                                Arrow(Var('A'), Var('B')),
-                                Arrow(Var('A'), Var('A')),
+                                Arrow(Var('a'), Var('b')),
+                                Arrow(Var('a'), Var('a')),
                             ),
                         ),
                     ],
@@ -146,10 +146,10 @@ def A11_bfs_result():
                         {},
                         {'a': Var('A'), 'b': Arrow(Var('B'), Var('A'))},
                     ],
-                    output_term=Arrow(Var('A'), Var('A')),
+                    output_term=Arrow(Var('a'), Var('a')),
                 )
             ],
-            substitutions=[{'A': Not(Var('A'))}],
-            output_term=Arrow(Not(Var('A')), Not(Var('A'))),
+            substitutions=[{'A': Not(Var('a'))}],
+            output_term=Arrow(Not(Var('a')), Not(Var('a'))),
         ),
     ]
